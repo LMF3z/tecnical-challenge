@@ -1,0 +1,43 @@
+form {
+    margin-top: 1.25rem;
+    width: 100%;
+    text-align: center;
+}
+
+/* form > section {
+    
+} */
+
+form section:nth-child(2) {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+form section:nth-child(3) {
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form button {
+    width: 8rem;
+    height: 2.5rem;
+    margin-inline: 0.25rem;
+}
+
+.form-group {
+    width: 50%;
+}
+
+.container-form-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.container-form-input > label {
+    margin-right: 0.3rem;
+}

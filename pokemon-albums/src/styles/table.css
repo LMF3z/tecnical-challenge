@@ -1,0 +1,17 @@
+table {
+    margin-top: 1.25rem;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead {
+    height: 2.5rem;
+}
+
+tbody tr {
+    height: 2.5rem;
+}
+
+tbody tr td {
+    text-align: center;
+}

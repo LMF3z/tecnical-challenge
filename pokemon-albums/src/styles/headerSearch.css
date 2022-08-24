@@ -1,0 +1,31 @@
+.container-search-elements {
+    min-height: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container-search-elements > div {
+
+    width: 50%;
+    height: 100%    ;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    font-size: 1rem;
+    line-height: 1.75rem;
+}
+
+.container-search-elements > div > label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.container-search-elements-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
