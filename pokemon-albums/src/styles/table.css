@@ -2,6 +2,8 @@ table {
     margin-top: 1.25rem;
     width: 100%;
     border-collapse: collapse;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 table thead {

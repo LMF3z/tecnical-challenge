@@ -1,3 +1,4 @@
+import { ToastContainer } from 'react-toastify';
 import FormHandlePokemon from './Components/FormHandlePokemon';
 import HeaderSearch from './Components/HeaderSearch';
 import Loader from './Components/Loader';
@@ -12,9 +13,17 @@ function App() {
     <main className='container'>
       <HeaderSearch />
       <Table />
-      {(state.isFormNewPokemonEnable || state.isEditMode) && (
+      {(state.isFormNewPokemonEnable) && (
         <FormHandlePokemon />
       )}
+
+      <div className="container-spinner">
+        {state.isLoading && (
+          <Loader />
+        )}
+      </div>
+
+      <ToastContainer />
     </main>
   );
 }

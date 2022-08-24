@@ -20,7 +20,7 @@ const HeaderSearch = () => {
                         onChange={() => { }} />
                 </div>
             </div>
-            <Button handleClick={() => dispatch(toggleEnableFormNewPokemon())}>
+            <Button handleClick={() => dispatch(toggleEnableFormNewPokemon(true))}>
                 <IoMdAdd size="1.3em" />
                 Nuevo
             </Button>

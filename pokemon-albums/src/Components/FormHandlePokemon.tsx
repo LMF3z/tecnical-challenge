@@ -1,19 +1,23 @@
+import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form'
 import { IoIosSave } from '@react-icons/all-files/io/IoIosSave'
 import { ImCancelCircle } from '@react-icons/all-files/im/ImCancelCircle'
 import "../styles/formHandlePokemon.css"
 import Button from "./Button"
 import { useAppDispatch, useAppSelector } from '../Store/redux/reduxHooks'
-import { useForm } from 'react-hook-form'
-import { attributesPokemon, FormNewPokemon, NewPokemon } from '../react-app-env'
+import { attributesPokemon, FormNewPokemon, NewPokemon, Pokemon } from '../react-app-env'
 import { useEffect, useState } from 'react'
-import { createNewPokemonAction } from '../Store/redux/actions/pokemon.actions'
+import { createNewPokemonAction, resetCreatePokemonAction, resetUpdatedAction, setEditMode, toggleEnableFormNewPokemon, toggleIsLoading, updatePokemonAction } from '../Store/redux/actions/pokemon.actions'
+import { resolverFormPokemon } from '../security/formPokemon.validation.schema'
 
 const FormHandlePokemon = () => {
 
     const dispatch = useAppDispatch()
     const state = useAppSelector(state => state.pokemon)
 
-    const { register, handleSubmit, setValue, getValues, reset, formState: { errors } } = useForm<FormNewPokemon>();
+    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<FormNewPokemon>({
+        resolver: resolverFormPokemon
+    });
 
     const [attackAndDefenseValues, setAttackAndDefenseValues] = useState<attributesPokemon>({
         attack: "0",
@@ -21,16 +25,29 @@ const FormHandlePokemon = () => {
     })
 
     useEffect(() => {
-        state.pokemonCreated.success && reset()
-        state.pokemonCreated.success && setAttackAndDefenseValues({
-            attack: "0",
-            defense: "0",
-        })
+        if (state.pokemonCreated.success) {
+            toast(state.pokemonCreated.type, {
+                onClose: () => {
+                    dispatch(resetCreatePokemonAction())
+                }
+            })
+            resetForm()
+        }
     }, [state.pokemonCreated])
 
     useEffect(() => {
+        if (state.pokemonEdited.success) {
+            toast(state.pokemonEdited.type, {
+                onClose: () => dispatch(resetUpdatedAction()),
+            })
+            resetForm()
+        }
+    }, [state.pokemonEdited])
 
-        if (state.pokemonToEdit.name !== "") {
+    useEffect(() => {
+
+        if (state.isEditMode) {
+            setValue("id", state.pokemonToEdit.id)
             setValue("attack", state.pokemonToEdit.attack)
             setValue("defense", state.pokemonToEdit.defense)
             setValue("name", state.pokemonToEdit.name)
@@ -46,6 +63,7 @@ const FormHandlePokemon = () => {
 
 
     const createNewPokemon = (data: FormNewPokemon) => {
+
         const newData: NewPokemon = {
             attack: Number(data.attack),
             defense: Number(data.defense),
@@ -56,7 +74,32 @@ const FormHandlePokemon = () => {
             type: "..."
         }
 
+        dispatch(toggleIsLoading(true))
+
+        if (state?.isEditMode) {
+
+            const newDataToEdit = {
+                ...newData,
+                id_author: newData.idAuthor,
+                id: Number(data.id),
+            }
+
+            return updatePokemon(newDataToEdit)
+        }
+
         dispatch(createNewPokemonAction(newData))
+    }
+
+    const updatePokemon = (data: Pokemon) => {
+        dispatch(updatePokemonAction(data))
+    }
+
+    const resetForm = () => {
+        reset()
+        setAttackAndDefenseValues({
+            attack: "0",
+            defense: "0",
+        })
     }
 
     return (
@@ -64,11 +107,17 @@ const FormHandlePokemon = () => {
             <h3>Nuevo Pokemon</h3>
 
             <section>
+
+                <input type="text" hidden {...register('id')} />
+
                 <div className="form-group">
+                    {errors.name && <span className='error'>Campo requerido.</span>}
                     <div className="container-form-input">
                         <label>Nombre:</label>
-                        <input {...register("name")} className="border-gray" type="text" placeholder="Nombre" />
+                        <input {...register("name")} className="border-gray" type="text"
+                            placeholder="Nombre" />
                     </div>
+                    {errors.image && <span className='error'>Campo requerido.</span>}
                     <div className="container-form-input">
                         <label>Imagen:</label>
                         <input {...register("image")} className="border-gray" type="text" placeholder="url"
@@ -103,9 +152,14 @@ const FormHandlePokemon = () => {
                     <IoIosSave />
                     {state.isEditMode ? "Actualizar" : "Guardar"}
                 </Button>
-                <Button>
+                <Button handleClick={state.isEditMode ?
+                    resetForm :
+                    () => dispatch(toggleEnableFormNewPokemon(false))}
+                >
+
                     <ImCancelCircle />
                     Cancelar
+
                 </Button>
             </section>
         </form>

@@ -29,3 +29,21 @@
     justify-content: space-between;
     align-items: center;
 }
+
+@media all and (max-width: 640px) {
+    .container-search-elements {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        height: 7rem;
+    }
+
+    .container-search-elements > div {
+        height: 50%;
+    }
+
+    .container-search-elements > div > label {
+        margin-bottom: 0;
+    }
+}

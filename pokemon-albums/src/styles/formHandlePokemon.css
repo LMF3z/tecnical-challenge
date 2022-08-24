@@ -4,13 +4,9 @@ form {
     text-align: center;
 }
 
-/* form > section {
-    
-} */
-
 form section:nth-child(2) {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
 }
 
@@ -40,4 +36,10 @@ form button {
 
 .container-form-input > label {
     margin-right: 0.3rem;
+}
+
+@media all and (max-width: 640px) {
+    form section:nth-child(2) {
+        flex-direction: column;
+    }
 }

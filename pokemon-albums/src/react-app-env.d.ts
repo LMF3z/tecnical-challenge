@@ -1,11 +1,13 @@
 /// <reference types="react-scripts" />
 
 export type StateApp = {
+  isLoading: boolead;
   pokemons: Pokemon[] | [];
   isFormNewPokemonEnable: boolean;
   pokemonCreated: PokemonCreated;
   isEditMode: boolean;
   pokemonToEdit: Pokemon;
+  pokemonEdited: PokemonEdited;
   pokemonDelete: PokemonDeleted;
 };
 
@@ -36,6 +38,12 @@ export interface PokemonCreated {
   success: boolean;
 }
 
+export interface PokemonEdited {
+  data: [];
+  type: string;
+  success: boolean;
+}
+
 export interface PokemonDeleted {
   data: [];
   type: string;
@@ -43,6 +51,7 @@ export interface PokemonDeleted {
 }
 
 export type FormNewPokemon = {
+  id?: number;
   name: string;
   image: string;
   attack: number;

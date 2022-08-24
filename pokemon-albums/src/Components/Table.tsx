@@ -1,7 +1,8 @@
+import { toast } from 'react-toastify';
 import { AiOutlineEdit } from '@react-icons/all-files/ai/AiOutlineEdit'
 import { FaTrash } from "@react-icons/all-files/fa/FaTrash"
 import { useEffect } from 'react'
-import { deletePokemonAction, getPokemonsAction, setPokemonToEditAction } from '../Store/redux/actions/pokemon.actions'
+import { deletePokemonAction, getPokemonsAction, resetDeletePokemonAction, setPokemonToEditAction, toggleIsLoading } from '../Store/redux/actions/pokemon.actions'
 import { useAppDispatch, useAppSelector } from '../Store/redux/reduxHooks'
 import { Pokemon } from '../react-app-env'
 import '../styles/table.css'
@@ -15,7 +16,19 @@ const Table = () => {
         getPokemons()
     }, [])
 
+    useEffect(() => {
+
+        if (state.pokemonDelete.type !== "") {
+            toast(state.pokemonDelete.type, {
+                onClose: () => dispatch(resetDeletePokemonAction())
+            })
+        }
+
+    }, [state.pokemonDelete])
+
+
     const getPokemons = () => {
+        dispatch(toggleIsLoading(true));
         dispatch(getPokemonsAction())
     }
 
@@ -23,7 +36,10 @@ const Table = () => {
         dispatch(setPokemonToEditAction(pokemon))
     }
 
-    const handleDeletePokemon = (id: number) => dispatch(deletePokemonAction(id))
+    const handleDeletePokemon = (id: number) => {
+        dispatch(toggleIsLoading(true))
+        dispatch(deletePokemonAction(id))
+    }
 
     return (
         <table className="border-gray">

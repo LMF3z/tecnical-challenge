@@ -3,6 +3,7 @@ import { ReducerActions } from '../../reducer.types';
 import { ActionsTypes } from '../../types';
 
 const initialState: StateApp = {
+  isLoading: false,
   pokemons: [],
   isFormNewPokemonEnable: false,
   pokemonCreated: {
@@ -21,6 +22,11 @@ const initialState: StateApp = {
     name: '',
     type: '',
   },
+  pokemonEdited: {
+    data: [],
+    type: '',
+    success: false,
+  },
   pokemonDelete: {
     data: [],
     type: '',
@@ -30,16 +36,28 @@ const initialState: StateApp = {
 
 const reducer = (state: StateApp = initialState, action: ReducerActions) => {
   switch (action.type) {
-    case ActionsTypes.GET_POKEMONS: {
-      return { ...state, pokemons: action.payload };
+    case ActionsTypes.TOGGLE_IS_LOADING: {
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
     }
 
     case ActionsTypes.TOGGLE_ENABLE_FORM_NEW_POKEMON: {
       return {
         ...state,
-        isFormNewPokemonEnable: !state.isFormNewPokemonEnable,
+        isFormNewPokemonEnable: action.payload,
       };
     }
+
+    case ActionsTypes.GET_POKEMONS: {
+      return {
+        ...state,
+        pokemons: action.payload,
+      };
+    }
+
+    // create pokemon
 
     case ActionsTypes.SET_POKEMON_CREATED: {
       return {
@@ -48,7 +66,33 @@ const reducer = (state: StateApp = initialState, action: ReducerActions) => {
       };
     }
 
+    case ActionsTypes.RESET_POKEMON_CREATED: {
+      return {
+        ...state,
+        pokemonCreated: action.payload,
+      };
+    }
+
+    // edit pokemon
+
     case ActionsTypes.TOGGLE_EDIT_MODE: {
+      if (action.payload === false) {
+        return {
+          ...state,
+          isEditMode: action.payload,
+          pokemonToEdit: {
+            attack: 0,
+            defense: 0,
+            hp: 0,
+            id: 0,
+            id_author: 1,
+            image: '',
+            name: '',
+            type: '',
+          },
+        };
+      }
+
       return {
         ...state,
         isEditMode: action.payload,
@@ -59,9 +103,30 @@ const reducer = (state: StateApp = initialState, action: ReducerActions) => {
       return {
         ...state,
         pokemonToEdit: action.payload,
+        isFormNewPokemonEnable: true,
         isEditMode: true,
       };
     }
+
+    case ActionsTypes.SET_POKEMON_EDITED: {
+      return {
+        ...state,
+        pokemonEdited: action.payload,
+        isEditMode: false,
+        pokemonToEdit: {
+          attack: 0,
+          defense: 0,
+          hp: 0,
+          id: 0,
+          id_author: 1,
+          image: '',
+          name: '',
+          type: '',
+        },
+      };
+    }
+
+    // delete pokemon
 
     case ActionsTypes.SET_POKEMON_DELETED: {
       return {
@@ -71,7 +136,7 @@ const reducer = (state: StateApp = initialState, action: ReducerActions) => {
     }
 
     default:
-      return state;
+      return { ...state };
   }
 };
 

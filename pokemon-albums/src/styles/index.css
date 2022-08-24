@@ -50,9 +50,22 @@ button {
 }
 
 .container {
-    padding-inline: 5rem;
-    padding-top: 3rem;
+    padding: 3rem 5rem 0 5rem;
 }
+
+@media all and (max-width: 640px) {
+    .container {
+        padding: 2rem 2rem 0 2rem;
+    }    
+}
+
+.container-spinner {
+    height: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2% 0 2% 0;
+  }
 
 .violet-bg {
     background-color: #6759f6;
@@ -64,4 +77,8 @@ button {
 
 .border-gray {
     border: solid #c8cfd1 2px;
+}
+
+.error {
+    color: red
 }
