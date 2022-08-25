@@ -1,10 +1,9 @@
 import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch"
 import { IoMdAdd } from "@react-icons/all-files/io/IoMdAdd"
 import Button from './Button'
-
-import "../styles/headerSearch.css"
 import { useAppDispatch } from "../Store/redux/reduxHooks"
 import { toggleEnableFormNewPokemon } from "../Store/redux/actions/pokemon.actions"
+import "../styles/headerSearch.css"
 
 const HeaderSearch = () => {
 

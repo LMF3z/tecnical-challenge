@@ -66,7 +66,6 @@ const Table = () => {
                             <FaTrash onClick={() => handleDeletePokemon(pokemon.id)} className='violet-color' size="1em" style={{ marginInline: "10px" }} />
                         </td>
                     </tr>
-
                 ))}
             </tbody>
         </table>
