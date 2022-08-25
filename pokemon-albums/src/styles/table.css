@@ -1,9 +1,21 @@
-table {
+.container-table {
     margin-top: 1.25rem;
+    
+    max-height: 50vh;
+    overflow: scroll;
+
+    overflow-x: hidden;
+}
+
+@media screen and (max-width: 640px) {
+    .container-table {
+        overflow-x: scroll;
+    }
+}
+
+table {
     width: 100%;
     border-collapse: collapse;
-    overflow-x: auto;
-    overflow-y: hidden;
 }
 
 table thead {

@@ -41,34 +41,45 @@ const Table = () => {
         dispatch(deletePokemonAction(id))
     }
 
+    const filterQuery = (search: string): Pokemon[] | [] => state.pokemons.filter((el: Pokemon) => {
+
+        if (Number(search) && Number(el.attack) === Number(search)) return el;
+
+        if (Number(search) && Number(el.defense) === Number(search)) return el;
+
+        return el.name.toLowerCase().includes(search)
+    })
+
     return (
-        <table className="border-gray">
-            <thead className='border-gray'>
-                <tr>
-                    <th className='border-gray'>Nombre</th>
-                    <th className='border-gray'>Imagen</th>
-                    <th className='border-gray'>Ataque</th>
-                    <th className='border-gray'>Defensa</th>
-                    <th className='border-gray'>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {state.pokemons.length > 0 && state.pokemons.map((pokemon: Pokemon) => (
-                    <tr key={pokemon.id}>
-                        <td className='border-gray'>{pokemon.name}</td>
-                        <td className='border-gray'>
-                            <img src={pokemon.image} alt="pokemon" width="20px" height="20px" />
-                        </td>
-                        <td className='border-gray'>{pokemon.attack}</td>
-                        <td className='border-gray'>{pokemon.defense}</td>
-                        <td className='border-gray'>
-                            <AiOutlineEdit onClick={() => handleEditePokenon(pokemon)} className='violet-color' size="1em" style={{ marginInline: "10px" }} />
-                            <FaTrash onClick={() => handleDeletePokemon(pokemon.id)} className='violet-color' size="1em" style={{ marginInline: "10px" }} />
-                        </td>
+        <div className='container-table'>
+            <table>
+                <thead className='border-gray'>
+                    <tr>
+                        <th className='border-gray'>Nombre</th>
+                        <th className='border-gray'>Imagen</th>
+                        <th className='border-gray'>Ataque</th>
+                        <th className='border-gray'>Defensa</th>
+                        <th className='border-gray'>Acciones</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {state.pokemons.length > 0 && filterQuery(state.querySearchPokemon).map((pokemon: Pokemon) => (
+                        <tr key={pokemon.id}>
+                            <td className='border-gray'>{pokemon.name}</td>
+                            <td className='border-gray'>
+                                <img src={pokemon.image} alt="pokemon" width="20px" height="20px" />
+                            </td>
+                            <td className='border-gray'>{pokemon.attack}</td>
+                            <td className='border-gray'>{pokemon.defense}</td>
+                            <td className='border-gray'>
+                                <AiOutlineEdit onClick={() => handleEditePokenon(pokemon)} className='violet-color' size="1em" style={{ marginInline: "10px" }} />
+                                <FaTrash onClick={() => handleDeletePokemon(pokemon.id)} className='violet-color' size="1em" style={{ marginInline: "10px" }} />
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     )
 }
 

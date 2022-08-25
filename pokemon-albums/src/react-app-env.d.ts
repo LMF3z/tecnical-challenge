@@ -3,6 +3,7 @@
 export type StateApp = {
   isLoading: boolead;
   pokemons: Pokemon[] | [];
+  querySearchPokemon: string;
   isFormNewPokemonEnable: boolean;
   pokemonCreated: PokemonCreated;
   isEditMode: boolean;

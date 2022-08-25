@@ -11,6 +11,7 @@ export type ReducerActions =
       type: ActionsTypes.GET_POKEMONS;
       payload: Pokemon[];
     }
+  | { type: ActionsTypes.SET_QUERY_SEARCH_POKEMON; payload: string }
   | { type: ActionsTypes.TOGGLE_EDIT_MODE; payload: boolean }
   | { type: ActionsTypes.TOGGLE_IS_LOADING; payload: boolean }
   | { type: ActionsTypes.SET_POKEMON_TO_EDIT; payload: Pokemon }

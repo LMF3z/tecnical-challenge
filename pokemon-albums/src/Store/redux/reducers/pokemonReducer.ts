@@ -5,6 +5,7 @@ import { ActionsTypes } from '../../types';
 const initialState: StateApp = {
   isLoading: false,
   pokemons: [],
+  querySearchPokemon: '',
   isFormNewPokemonEnable: false,
   pokemonCreated: {
     data: [],
@@ -54,6 +55,13 @@ const reducer = (state: StateApp = initialState, action: ReducerActions) => {
       return {
         ...state,
         pokemons: action.payload,
+      };
+    }
+
+    case ActionsTypes.SET_QUERY_SEARCH_POKEMON: {
+      return {
+        ...state,
+        querySearchPokemon: action.payload,
       };
     }
 

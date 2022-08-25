@@ -29,6 +29,10 @@ export const getPokemonsAction = () => async (dispatch: Dispatch) => {
   dispatch({ type: ActionsTypes.TOGGLE_IS_LOADING, payload: false });
 };
 
+export const searchPokemonAction = (query: string) => (dispatch: Dispatch) => {
+  dispatch({ type: ActionsTypes.SET_QUERY_SEARCH_POKEMON, payload: query });
+};
+
 // create pokemon
 
 export const createNewPokemonAction =
